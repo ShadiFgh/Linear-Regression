@@ -4,26 +4,31 @@ import matplotlib.pyplot as plt
 
 df = pd.read_csv('data.csv')
 data = np.array(df)
-n = df.shape[1] - 1
+n = df.shape[1]
 records = df.shape[0]
 
-a = 0.01
-b = 1
 alpha = 0.02
+coefs = []
+for i in range(0, n):
+    print("Enter coef: ")
+    coefs.append(float(input()))
+
 
 y = []
-for i in range(0, 96):
-    y.append(data[i][1])
+for i in range(0, records):
+    y.append(data[i][n-1])
 
-x = []
-for i in range(0, 96):
-    x.append(data[i][0])
+x = np.zeros((records, n-1))
+for i in range(0, n-1):
+    for j in range(0, records):
+        x[j][i] = data[j][i]
+
 
 def h(a, b, x):
 
      HP = []
-     for i in range(0, 96):
-         HP.append(a + b * x[i])
+     for i in range(0, records):
+         HP.append(a + (b * x[i]))
 
      return HP
 
@@ -51,7 +56,7 @@ def theta1(b):
     return b - (alpha*(total/records))
 
 
-for i in range(1000):
+for i in range(700):
      a = theta0(a)
      b = theta1(b)
 
@@ -60,5 +65,5 @@ print(cost(a, b, x))
 print(a)
 print(b)
 
-plt.scatter(x, y)
-plt.show()
+# plt.scatter(x, y)
+# plt.show()

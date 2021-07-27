@@ -54,24 +54,27 @@ def theta0(a):
     total = sum(diff)
     return a - (alpha*(total/records))
 
-# def theta(coefs):
-#
-#     for j in range(1, n):
-#         diff = np.zeros((records, 1))
-#         for i in range(0, records):
-#             diff[i] = diff[i] * x[i]
-#         total = sum(diff)
-#         coefs[j] = coefs[j] - (alpha*(total/records))
+def theta(coefs):
+
+    for j in range(1, n):
+        diff = np.zeros((records, 1))
+        for i in range(0, records):
+            diff[i] = h(coefs, x)[i] - y[i]
+        for i in range(0, records):
+            diff[i] = diff[i] * x[i]
+        total = sum(diff)
+        coefs[j] = coefs[j] - (alpha*(total/records))
+    return coefs
 
 
-for i in range(10):
+for i in range(700):
      coefs[0] = theta0(coefs[0])
-     # coefs = theta(coefs)
+     coefs = theta(coefs)
 
 
 print(cost(coefs, x))
 print(coefs[0])
-# print(coefs)
+print(coefs)
 
 # plt.scatter(x, y)
 # plt.show()

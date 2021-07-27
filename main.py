@@ -37,7 +37,7 @@ def h(coefs, x):
 
 def cost(coefs, x):
 
-    diff = []
+    diff = np.zeros((records, 1))
     for i in range(0, records):
         diff[i] = h(coefs, x)[i] - y[i]
     for i in range(0, records):
@@ -45,7 +45,7 @@ def cost(coefs, x):
     total = sum(diff)
     return total/(2*records)
 
-print(cost(coefs, x))
+# print(cost(coefs, x))
 
 def theta0(a):
 

@@ -24,23 +24,28 @@ for i in range(0, n-1):
         x[j][i] = data[j][i]
 
 
-def h(a, b, x):
+def h(coefs, x):
 
-     HP = []
-     for i in range(0, records):
-         HP.append(a + (b * x[i]))
+     HP = np.zeros((records, 1))
+     for j in range(0, records):
+         for i in range(0, n - 1):
+             HP[j] = HP[j] + coefs[i + 1] * x[j][i]
+         HP[j] = HP[j] + coefs[0]
 
      return HP
+# print(h(coefs, x))
 
+def cost(coefs, x):
 
-def cost(a, b, x):
-
-    diff = np.subtract(h(a, b, x), y)
-    for i in range(0, 96):
+    diff = []
+    for i in range(0, records):
+        diff[i] = h(coefs, x)[i] - y[i]
+    for i in range(0, records):
         diff[i] = diff[i] ** 2
     total = sum(diff)
     return total/(2*records)
 
+print(cost(coefs, x))
 
 def theta0(a):
 

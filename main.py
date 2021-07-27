@@ -10,8 +10,7 @@ records = df.shape[0]
 alpha = 0.02
 coefs = []
 for i in range(0, n):
-    print("Enter coef: ")
-    coefs.append(float(input()))
+    coefs.append(float(1))
 
 
 y = []
@@ -76,5 +75,3 @@ print(cost(coefs, x))
 print(coefs[0])
 print(coefs)
 
-# plt.scatter(x, y)
-# plt.show()

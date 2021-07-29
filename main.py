@@ -39,7 +39,6 @@ def cost(coefs, x):
     diff = np.zeros((records, 1))
     for i in range(0, records):
         diff[i] = h(coefs, x)[i] - y[i]
-    for i in range(0, records):
         diff[i] = diff[i] ** 2
     total = sum(diff)
     return total/(2*records)
@@ -59,14 +58,13 @@ def theta(coefs):
         diff = np.zeros((records, 1))
         for i in range(0, records):
             diff[i] = h(coefs, x)[i] - y[i]
-        for i in range(0, records):
-            diff[i] = diff[i] * x[i]
+            diff[i] = diff[i] * x[i][j - 1]
         total = sum(diff)
         coefs[j] = coefs[j] - (alpha*(total/records))
     return coefs
 
 
-for i in range(700):
+for i in range(70):
      coefs[0] = theta0(coefs[0])
      coefs = theta(coefs)
 

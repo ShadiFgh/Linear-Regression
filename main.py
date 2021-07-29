@@ -21,18 +21,17 @@ x = np.zeros((records, n-1))
 for i in range(0, n-1):
     for j in range(0, records):
         x[j][i] = data[j][i]
+x0 = np.ones((records, 1))
+x = np.hstack((x0, x))
+# print(x)
 
 
 def h(coefs, x):
 
-     HP = np.zeros((records, 1))
-     for j in range(0, records):
-         for i in range(0, n - 1):
-             HP[j] = HP[j] + coefs[i + 1] * x[j][i]
-         HP[j] = HP[j] + coefs[0]
+     HP = np.matmul(coefs, x.T)
 
      return HP
-# print(h(coefs, x))
+print(h(coefs, x))
 
 def cost(coefs, x):
 
@@ -64,7 +63,7 @@ def theta(coefs):
     return coefs
 
 
-for i in range(70):
+for i in range(700):
      coefs[0] = theta0(coefs[0])
      coefs = theta(coefs)
 

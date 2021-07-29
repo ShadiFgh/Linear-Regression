@@ -7,7 +7,7 @@ data = np.array(df)
 n = df.shape[1]
 records = df.shape[0]
 
-alpha = 0.02
+alpha = 0.00001
 coefs = []
 for i in range(0, n):
     coefs.append(float(1))
@@ -28,47 +28,47 @@ x = np.hstack((x0, x))
 
 def h(coefs, x):
 
+
      HP = np.matmul(coefs, x.T)
 
      return HP
-print(h(coefs, x))
+# print(h(coefs, x))
 
 def cost(coefs, x):
 
-    diff = np.zeros((records, 1))
+
+    diff = h(coefs, x) - y
     for i in range(0, records):
-        diff[i] = h(coefs, x)[i] - y[i]
-        diff[i] = diff[i] ** 2
+            diff[i] = diff[i] ** 2
     total = sum(diff)
     return total/(2*records)
 
 # print(cost(coefs, x))
 
-def theta0(a):
-    diff = np.zeros((records, 1))
-    for i in range(0, records):
-        diff[i] = h(coefs, x)[i] - y[i]
-    total = sum(diff)
-    return a - (alpha*(total/records))
+# def theta0(a):
+#
+#     diff = h(coefs, x) - y
+#     total = sum(diff)
+#     return a - (alpha*(total/records))
+# print(theta0(coefs[0]))
 
 def theta(coefs):
 
-    for j in range(1, n):
-        diff = np.zeros((records, 1))
-        for i in range(0, records):
-            diff[i] = h(coefs, x)[i] - y[i]
-            diff[i] = diff[i] * x[i][j - 1]
-        total = sum(diff)
+    diff = h(coefs, x) - y
+    for j in range(0, n):
+
+        mul = diff * x[:, j]
+        total = sum(mul)
         coefs[j] = coefs[j] - (alpha*(total/records))
+
     return coefs
+# print(theta(coefs))
 
-
-for i in range(700):
-     coefs[0] = theta0(coefs[0])
+for i in range(450):
+     # coefs[0] = theta0(coefs[0])
      coefs = theta(coefs)
 
 
 print(cost(coefs, x))
-print(coefs[0])
 print(coefs)
 

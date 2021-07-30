@@ -7,20 +7,13 @@ data = np.array(df)
 n = df.shape[1]
 records = df.shape[0]
 
-alpha = 0.00001
-coefs = []
-for i in range(0, n):
-    coefs.append(float(1))
+alpha = 0.02
+coefs = np.ndarray(n)
 
+y = df.iloc[:, -1]
+# print(y)
 
-y = []
-for i in range(0, records):
-    y.append(data[i][n-1])
-
-x = np.zeros((records, n-1))
-for i in range(0, n-1):
-    for j in range(0, records):
-        x[j][i] = data[j][i]
+x = df.iloc[: , :-1]
 x0 = np.ones((records, 1))
 x = np.hstack((x0, x))
 # print(x)
@@ -64,7 +57,7 @@ def theta(coefs):
     return coefs
 # print(theta(coefs))
 
-for i in range(450):
+for i in range(700):
      # coefs[0] = theta0(coefs[0])
      coefs = theta(coefs)
 

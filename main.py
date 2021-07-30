@@ -3,7 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 df = pd.read_csv('data.csv')
-data = np.array(df)
 n = df.shape[1]
 records = df.shape[0]
 
@@ -21,7 +20,6 @@ x = np.hstack((x0, x))
 
 def h(coefs, x):
 
-
      HP = np.matmul(coefs, x.T)
 
      return HP
@@ -29,21 +27,14 @@ def h(coefs, x):
 
 def cost(coefs, x):
 
-
-    diff = h(coefs, x) - y
-    for i in range(0, records):
-            diff[i] = diff[i] ** 2
+    diff = (h(coefs, x) - y) * (h(coefs, x) - y)
     total = sum(diff)
+
     return total/(2*records)
 
 # print(cost(coefs, x))
 
-# def theta0(a):
-#
-#     diff = h(coefs, x) - y
-#     total = sum(diff)
-#     return a - (alpha*(total/records))
-# print(theta0(coefs[0]))
+
 
 def theta(coefs):
 
@@ -58,7 +49,6 @@ def theta(coefs):
 # print(theta(coefs))
 
 for i in range(700):
-     # coefs[0] = theta0(coefs[0])
      coefs = theta(coefs)
 
 

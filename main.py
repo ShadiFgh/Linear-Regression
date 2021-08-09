@@ -5,53 +5,59 @@ import matplotlib.pyplot as plt
 df = pd.read_csv('data.csv')
 n = df.shape[1]
 m = df.shape[0]
+# normalized = (df - df.mean()) / df.std()
+learning_rate = 0.01
+coefs = np.ones((1, n))
+# print(coefs)
+y = df.iloc[:, -1].values.reshape((m, 1))
 
-alpha = 0.01
-coefs = np.ndarray(n)
-
-y = df.iloc[:, -1]
 # print(y)
+# print(y.shape)
 
-x = df.iloc[: , :-1]
+x1 = df.iloc[: , :-1]
 x0 = np.ones((m, 1))
-x = np.hstack((x0, x))
+x = np.hstack((x0, x1))
 # print(x)
 
 
 def h(coefs, x, y):
 
-     HP = np.matmul(coefs, x.T)
+     HP = np.matmul(x, coefs.T)
 
      return HP
-# print(h(coefs, x))
+
+# print(h(coefs, x, y))
 
 def cost(coefs, x, y):
 
-    
     diff = np.square(h(coefs, x, y) - y)
     total = sum(diff)
-    return total/(2*m)
+    return total/(2 * m)
 
-# print(cost(coefs, x))
-
+# print(cost(coefs, x, y))
 
 
 def theta(coefs):
 
     diff = h(coefs, x, y) - y
-    for j in range(0, n):
-
-        mul = diff * x[:, j]
-        total = sum(mul)
-        coefs[j] = coefs[j] - (alpha*(total/m))
+    mul = diff * x
+    total = sum(mul)
+    coefs -= (learning_rate * (total / m))
 
     return coefs
 # print(theta(coefs))
+c = []
+for i in range(20000):
+    coefs = theta(coefs)
+    co = cost(coefs, x, y)[0]
+    print(f"Lv: {i + 1} ==> Cost: {co}")
+    c.append(co)
 
-for i in range(1000):
-     coefs = theta(coefs)
 
+print("b:", coefs[0][0])
+print("W:", coefs[0][1:])
 
-print(cost(coefs, x, y))
-print(coefs)
-
+plt.xlabel("Iteration")
+plt.ylabel("Cost")
+plt.plot(c)
+plt.show()
